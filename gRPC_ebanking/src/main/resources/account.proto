@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_package = "com.bank.grpc";
+
+
+//Service definition.
+
+service account{
+	// Check Balance - Serverside Streaming gRPC
+	rpc check_balance(Empty) returns (stream APIResponse);
+	// Display Transaction - birectional Streaming gRPC
+	rpc display_transactions(stream TransactionRequest) returns (stream APIResponse);
+	// Direct Debit - Client Side Streaming gRPC
+	rpc direct_debit(stream Empty) returns (APIResponse);
+}
+
+//The request message 
+message TransactionRequest{
+	int32 numberoftransaction = 1;
+}
+
+//The response message
+message APIResponse{
+	string responsemessage = 1;
+	int32 responsecode = 2;
+}
+
+message Empty{
+}
